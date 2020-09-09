@@ -64,10 +64,10 @@ segments = {
     'car_brand': "VOLKSWAGEN",
     'carFingerprint': VOLKSWAGEN.GOLF,
   },
-  "fbbfa6af821552b9|2020-03-03--08-09-43--0": {
-    'car_brand': "NISSAN",
-    'carFingerprint': NISSAN.XTRAIL,
-  },
+  #"fbbfa6af821552b9|2020-03-03--08-09-43--0": {
+  #  'car_brand': "NISSAN",
+  #  'carFingerprint': NISSAN.XTRAIL,
+  #},
   # Enable when port is tested and dascamOnly is no longer set
   #"32a319f057902bb3|2020-04-27--15-18-58--2": {
   #  'car_brand': "MAZDA",
