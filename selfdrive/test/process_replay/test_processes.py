@@ -17,7 +17,7 @@ from selfdrive.car.hyundai.values import CAR as HYUNDAI
 #from selfdrive.car.mazda.values import CAR as MAZDA
 from selfdrive.car.subaru.values import CAR as SUBARU
 from selfdrive.car.toyota.values import CAR as TOYOTA
-from selfdrive.car.volkswagen.values import CAR as VOLKSWAGEN
+#from selfdrive.car.volkswagen.values import CAR as VOLKSWAGEN
 
 INJECT_MODEL = 0
 
@@ -60,10 +60,10 @@ segments = {
   #  'car_brand': "SUBARU_LEGACY",
   #  'carFingerprint': SUBARU.OUTBACK_PREGLOBAL,
   #},
-  "76b83eb0245de90e|2020-03-05--19-16-05--3": {
-    'car_brand': "VOLKSWAGEN",
-    'carFingerprint': VOLKSWAGEN.GOLF,
-  },
+  #"76b83eb0245de90e|2020-03-05--19-16-05--3": {
+  #  'car_brand': "VOLKSWAGEN",
+  #  'carFingerprint': VOLKSWAGEN.GOLF,
+  #},
   #"fbbfa6af821552b9|2020-03-03--08-09-43--0": {
   #  'car_brand': "NISSAN",
   #  'carFingerprint': NISSAN.XTRAIL,
@@ -76,7 +76,7 @@ segments = {
 }
 
 # ford doesn't need to be tested until a full port is done
-excluded_interfaces = ["mock", "ford", "mazda", "nissan"]
+excluded_interfaces = ["mock", "ford", "mazda", "nissan", "volkswagen"]
 
 BASE_URL = "https://commadataci.blob.core.windows.net/openpilotci/"
 
