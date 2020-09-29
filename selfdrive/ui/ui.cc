@@ -24,7 +24,7 @@ int write_param_float(float param, const char* param_name, bool persistent_param
 
 void ui_init(UIState *s) {
   s->sm = new SubMaster({"model", "controlsState", "uiLayoutState", "liveCalibration", "radarState", "thermal",
-                         "health", "carParams", "ubloxGnss", "driverState", "dMonitoringState"});
+                         "health", "carParams", "ubloxGnss", "driverState", "dMonitoringState", "sensorEvents"});
 
   s->started = false;
   s->status = STATUS_OFFROAD;
@@ -117,7 +117,6 @@ void update_sockets(UIState *s) {
   UIScene &scene = s->scene;
   SubMaster &sm = *(s->sm);
 
-  // poll sockets
   if (sm.update(0) == 0){
     return;
   }
@@ -130,9 +129,9 @@ void update_sockets(UIState *s) {
     auto alert_sound = scene.controls_state.getAlertSound();
     if (scene.alert_type.compare(scene.controls_state.getAlertType()) != 0) {
       if (alert_sound == AudibleAlert::NONE) {
-        s->sound.stop();
+        s->sound->stop();
       } else {
-        s->sound.play(alert_sound);
+        s->sound->play(alert_sound);
       }
     }
     scene.alert_text1 = scene.controls_state.getAlertText1();
@@ -219,6 +218,16 @@ void update_sockets(UIState *s) {
     scene.frontview = false;
   }
 
+#ifdef QCOM2 // TODO: use this for QCOM too
+  if (sm.updated("sensorEvents")) {
+    for (auto sensor : sm["sensorEvents"].getSensorEvents()) {
+      if (sensor.which() == cereal::SensorEventData::LIGHT) {
+        s->light_sensor = sensor.getLight();
+      }
+    }
+  }
+#endif
+
   s->started = scene.thermal.getStarted() || scene.frontview;
 }
 
@@ -244,17 +253,16 @@ void ui_update(UIState *s) {
   }
 
   // Handle controls timeout
-  bool controls_timeout = ((s->sm)->frame - (s->sm)->rcv_frame("controlsState")) > 10*UI_FREQ;
-  if (s->started && !s->scene.frontview && controls_timeout) {
+  if (s->started && !s->scene.frontview && ((s->sm)->frame - s->started_frame) > 5*UI_FREQ) {
     if ((s->sm)->rcv_frame("controlsState") < s->started_frame) {
       // car is started, but controlsState hasn't been seen at all
       s->scene.alert_text1 = "openpilot Unavailable";
       s->scene.alert_text2 = "Waiting for controls to start";
       s->scene.alert_size = cereal::ControlsState::AlertSize::MID;
-    } else {
+    } else if (((s->sm)->frame - (s->sm)->rcv_frame("controlsState")) > 5*UI_FREQ) {
       // car is started, but controls is lagging or died
       if (s->scene.alert_text2 != "Controls Unresponsive") {
-        s->sound.play(AudibleAlert::CHIME_WARNING_REPEAT);
+        s->sound->play(AudibleAlert::CHIME_WARNING_REPEAT);
         LOGE("Controls unresponsive");
       }
 

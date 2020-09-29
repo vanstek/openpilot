@@ -188,6 +188,7 @@ managed_processes = {
   "updated": "selfdrive.updated",
   "dmonitoringmodeld": ("selfdrive/modeld", ["./dmonitoringmodeld"]),
   "modeld": ("selfdrive/modeld", ["./modeld"]),
+  "rtshield": "selfdrive.rtshield",
 }
 
 daemon_processes = {
@@ -215,6 +216,7 @@ persistent_processes = [
   'logmessaged',
   'ui',
   'uploader',
+  'deleter',
 ]
 
 if not PC:
@@ -226,7 +228,6 @@ if not PC:
 if ANDROID:
   persistent_processes += [
     'updated',
-    'deleter',
   ]
 
 car_started_processes = [
@@ -234,13 +235,10 @@ car_started_processes = [
   'plannerd',
   'loggerd',
   'radard',
-  'dmonitoringd',
   'calibrationd',
   'paramsd',
   'camerad',
-  'modeld',
   'proclogd',
-  'ubloxd',
   'locationd',
   'clocksd',
 ]
@@ -253,20 +251,27 @@ driver_view_processes = [
 
 if WEBCAM:
   car_started_processes += [
+    'dmonitoringd',
     'dmonitoringmodeld',
   ]
 
 if not PC:
   car_started_processes += [
+    'ubloxd',
     'sensord',
+    'dmonitoringd',
     'dmonitoringmodeld',
   ]
 
 if ANDROID:
   car_started_processes += [
     'gpsd',
+    'rtshield',
   ]
 
+# starting dmonitoringmodeld when modeld is initializing can sometimes \
+# result in a weird snpe state where dmon constantly uses more cpu than normal.
+car_started_processes += ['modeld']
 
 def register_managed_process(name, desc, car_started=False):
   global managed_processes, car_started_processes, persistent_processes
