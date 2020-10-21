@@ -119,7 +119,7 @@ class CarState(CarStateBase):
 
     if CP.carFingerprint in PREGLOBAL_CARS:
       signals += [
-        ("LKA_Lockout", "Steering_Torque", 0),
+        ("Steer_Error_1", "Steering_Torque", 0),
       ]
     else:
       signals += [
