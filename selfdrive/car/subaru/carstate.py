@@ -72,7 +72,6 @@ class CarState(CarStateBase):
     else:
       ret.steerWarning = cp.vl["Steering_Torque"]['Steer_Warning'] == 1
       ret.cruiseState.nonAdaptive = cp_cam.vl["ES_DashStatus"]['Conventional_Cruise'] == 1
-      self.es_distance_msg = copy.copy(cp_cam.vl["ES_Distance"])
       self.es_lkas_msg = copy.copy(cp_cam.vl["ES_LKAS_State"])
 
     return ret
@@ -179,24 +178,6 @@ class CarState(CarStateBase):
         ("Cruise_Set_Speed", "ES_DashStatus", 0),
         ("Conventional_Cruise", "ES_DashStatus", 0),
 
-        ("Counter", "ES_Distance", 0),
-        ("Signal1", "ES_Distance", 0),
-        ("Cruise_Fault", "ES_Distance", 0),
-        ("Cruise_Throttle", "ES_Distance", 0),
-        ("Signal2", "ES_Distance", 0),
-        ("Car_Follow", "ES_Distance", 0),
-        ("Signal3", "ES_Distance", 0),
-        ("Cruise_Brake_Active", "ES_Distance", 0),
-        ("Distance_Swap", "ES_Distance", 0),
-        ("Cruise_EPB", "ES_Distance", 0),
-        ("Signal4", "ES_Distance", 0),
-        ("Close_Distance", "ES_Distance", 0),
-        ("Signal5", "ES_Distance", 0),
-        ("Cruise_Cancel", "ES_Distance", 0),
-        ("Cruise_Set", "ES_Distance", 0),
-        ("Cruise_Resume", "ES_Distance", 0),
-        ("Signal6", "ES_Distance", 0),
-
         ("Counter", "ES_LKAS_State", 0),
         ("Keep_Hands_On_Wheel", "ES_LKAS_State", 0),
         ("Empty_Box", "ES_LKAS_State", 0),
@@ -218,7 +199,6 @@ class CarState(CarStateBase):
 
       checks = [
         ("ES_DashStatus", 10),
-        ("ES_Distance", 20),
         ("ES_LKAS_State", 10),
       ]
 
