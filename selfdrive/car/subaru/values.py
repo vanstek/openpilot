@@ -206,7 +206,7 @@ FW_VERSIONS = {
       b'\xbe\xf2\x00p\x00',
     ],
   },
-  CAR.OUTBACK_PREGLOBAL: {
+  CAR.OUTBACK: {
     # 2020 Outback Hybrid - UDM / @KingChalupa
     # Ecu, addr, subaddr: ROM ID
     (Ecu.esp, 0x7b0, None): [
