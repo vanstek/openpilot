@@ -25,7 +25,7 @@ class CarInterface(CarInterfaceBase):
     # Subaru port is a community feature, since we don't own one to test
     ret.communityFeature = True
 
-    ret.dashcamOnly = candidate in PREGLOBAL_CARS
+    #ret.dashcamOnly = candidate in PREGLOBAL_CARS
 
     # force openpilot to fake the stock camera, since car harness is not supported yet and old style giraffe (with switches)
     # was never released
