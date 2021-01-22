@@ -71,7 +71,7 @@ class CarInterface(CarInterfaceBase):
       ret.steerActuatorDelay = 0.1  # end-to-end angle controller
       ret.lateralTuning.pid.kf = 0.000045
       ret.lateralTuning.pid.kiBP, ret.lateralTuning.pid.kpBP = [[0., 20.], [0., 20.]]
-      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.195, 0.25], [0.02, 0.01]]
+      ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.195, 0.25], [0.02, 0.001]]
 
     if candidate in [CAR.FORESTER_PREGLOBAL, CAR.OUTBACK_PREGLOBAL_2018]:
       ret.safetyParam = 1 # Outback 2018-2019 and Forester have reversed driver torque signal
